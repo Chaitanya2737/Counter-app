@@ -17,9 +17,14 @@ const App = () => {
     const handleEvaluate = () => {
         try {
             if (input === '') {
-                setResult('Incomplete Expression');
+                setResult('Error');
                 return;
             }
+
+            if (input === '0/0') {
+              setResult('NaN');
+              return;
+          }
 
             // Check for division by zero
             if (input.includes('/0')) {
@@ -28,10 +33,7 @@ const App = () => {
             }
 
             // Check for division zero by zero
-            if (input === '0/0') {
-                setResult('NaN');
-                return;
-            }
+           
 
             const evaluatedResult = eval(input); // Note: eval can be dangerous if not used carefully
             setResult(evaluatedResult);
