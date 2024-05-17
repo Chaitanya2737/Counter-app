@@ -1,33 +1,52 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+    const [input, setInput] = useState('');
+    const [result, setResult] = useState('');
 
-  const increment = () => {
-    setCount(prevCount => prevCount + 1);
-  };
+    const handleClick = (value) => {
+        setInput((prevInput) => prevInput + value);
+    };
 
-  const decrement = () => {
-    setCount(prevCount => prevCount - 1);
-  };
+    const handleClear = () => {
+        setInput('');
+        setResult('');
+    };
 
-  return (
-    <div>
-      <h1>Counter App</h1>
+    const handleEvaluate = () => {
+        try {
+            const evaluatedResult = eval(input); // Note: eval can be dangerous if not used carefully
+            setResult(evaluatedResult);
+        } catch (error) {
+            setResult('Error');
+        }
+    };
 
-      <div>
-        <span>Count: </span>
-        <span>{count}</span>
-      </div>
-
-      <span>
-        <button onClick={increment}>Increment</button>
-        <button onClick={decrement}>Decrement</button>
-      </span>
-    </div>
-  );
-}
+    return (
+        <div className="calculator">
+            <input type="text" value={input} readOnly id="display" />
+            <div className="buttons">
+                <button onClick={handleClear}>C</button>
+                <button onClick={() => handleClick('9')}>9</button>
+                <button onClick={() => handleClick('8')}>8</button>
+                <button onClick={() => handleClick('7')}>7</button>
+                <button onClick={() => handleClick('+')}>/</button>
+                <button onClick={() => handleClick('4')}>4</button>
+                <button onClick={() => handleClick('5')}>5</button>
+                <button onClick={() => handleClick('6')}>6</button>
+                <button onClick={() => handleClick('*')}>*</button>
+                <button onClick={() => handleClick('1')}>1</button>
+                <button onClick={() => handleClick('2')}>2</button>
+                <button onClick={() => handleClick('3')}>3</button>
+                <button onClick={() => handleClick('-')}>-</button>
+                <button onClick={() => handleClick('0')}>0</button>
+                <button onClick={handleEvaluate}>=</button>
+                <button onClick={() => handleClick('+')}>+</button>
+            </div>
+            <div className="result">{result}</div>
+        </div>
+    );
+};
 
 export default App;
